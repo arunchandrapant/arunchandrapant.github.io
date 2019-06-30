@@ -313,4 +313,9 @@ var store = [{
         "excerpt":"This post should display a header with a responsive video, if the theme supports it. Settings Parameter Required Description id Required ID of the video provider Required Hosting provider of the video, either youtube or vimeo YouTube To embed the following YouTube video at url https://www.youtube.com/watch?v=XsxDH4HcOWA (long version) or https://youtu.be/XsxDH4HcOWA...","categories": ["Layout","Uncategorized"],
         "tags": ["video","layout"],
         "url": "http://localhost:4000/layout/uncategorized/layout-header-video/",
-        "teaser":null}]
+        "teaser":null},{
+        "title": "मेघालय",
+        "excerpt":"हम दिन मे गुवाहाटी से चले तो शिलौंग पहुंचने से पहले ही सूर्यास्त हो चुका था। उमियम ताल के दर्शन अंधेरे मे हुएे। सुना था क्रिस्मस का पर्व यहां पर प्रसिद्ध है, पर एेसा कुछ अनुभव नहीं हुअा। शहर शांत और अंधेरा सा था। उमियम ताल शहर मे ना रुकते...","categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/travel/meghalaya/",
+        "teaser":"http://localhost:4000/assets/images/meghalaya/meghalaya.jpg"}]
