@@ -1,0 +1,276 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.16.3 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Writing Excel file to Azure Data Lake Store Gen-1 using Python and Pandas - अरुण चन्द्र पंत</title>
+<meta name="description" content="Using Azure Data Lake Store Python SDK">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="अरुण चन्द्र पंत">
+<meta property="og:title" content="Writing Excel file to Azure Data Lake Store Gen-1 using Python and Pandas">
+<meta property="og:url" content="http://localhost:4000/technology/excel-to-adls-python/">
+
+
+  <meta property="og:description" content="Using Azure Data Lake Store Python SDK">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2019-07-08T18:45:17+05:30">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/technology/excel-to-adls-python/">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "अरुण चन्द्र पंत",
+      "url": "http://localhost:4000",
+      "sameAs": null
+    }
+  </script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="अरुण चन्द्र पंत Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">अरुण चन्द्र पंत</a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/technology/" >Technology</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Writing Excel file to Azure Data Lake Store Gen-1 using Python and Pandas">
+    <meta itemprop="description" content="Using Azure Data Lake Store Python SDK">
+    
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Writing Excel file to Azure Data Lake Store Gen-1 using Python and Pandas
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h2 id="azure-python-sdk">Azure Python SDK</h2>
+<p>Whenever dealing with Azure resources in Python code, <a href="https://docs.microsoft.com/en-us/python/azure/?view=azure-python">Azure Python SDK</a> comes handy. Having a native Python API maintained by Azure saves time and effort required to create custom wrappers over Azure REST API.</p>
+
+<h2 id="sdk-components-for-azure-datalake-store-gen-1">SDK Components for Azure Datalake Store Gen-1</h2>
+<p>The <a href="https://docs.microsoft.com/en-us/python/api/overview/azure/data-lake-store?view=azure-python">Azure Data Lake Store Gen-1</a> (ADLS) section of API consists of <a href="https://docs.microsoft.com/en-us/python/api/azure-mgmt-datalake-store/?view=azure-python">management</a> and <a href="https://docs.microsoft.com/en-us/python/api/azure-datalake-store/azure.datalake.store?view=azure-python">client</a> parts.</p>
+
+<p>Management package consists of modules required for resource management activities relating to data lake store, such as creating or deleting data lake store itself or configurations such as firewall and virutal network settings. We don’t need management package for our task. However, you can install it with:</p>
+<blockquote>
+  <p>pip install azure-mgmt-datalake-store</p>
+</blockquote>
+
+<p>Client package is what we will need for the task at hand (writing files). It consists of modules for authenticating as a client (consumer of data) and downloading/uploading (other filesystem operations as well) files. Install client package with:</p>
+<blockquote>
+  <p>pip install azure-datalake-store</p>
+</blockquote>
+
+<p>We need <code class="highlighter-rouge">lib</code> and <code class="highlighter-rouge">core</code> moodules from client package.</p>
+
+<p><code class="highlighter-rouge">lib</code> module contains an <code class="highlighter-rouge">auth</code> function that we use for authenticating to ADLS as a client using serivce principals and secret from an application registered in Azure AD.</p>
+
+<p><code class="highlighter-rouge">core</code> module contains <code class="highlighter-rouge">AzureDLFileSystem</code> class that contains many function providing <a href="https://docs.microsoft.com/en-us/python/api/azure-datalake-store/azure.datalake.store.core.azuredlfilesystem?view=azure-python">file system like operations</a> (creating, deleting, listing, moving, copying files and directories, access control lists and many more) on ADLS directly from your Python code. This class brings great convenience for managing data on ADLS.</p>
+
+<h2 id="example-code">Example Code</h2>
+<p>The following code makes use of <code class="highlighter-rouge">open</code> function in <code class="highlighter-rouge">AzureDLFileSystem</code> class of <code class="highlighter-rouge">core</code> module:</p>
+
+<script src="https://gist.github.com/arunchandrapant/55ae9cb487fc8a47d6b034c591f767fd.js"></script>
+
+<h2 id="code-explaination">Code Explaination</h2>
+<p><code class="highlighter-rouge">open</code> function in <code class="highlighter-rouge">AzureDLFileSystem</code> is like the open function from base Python used for reading-writing files into local file system. It accepts stream of bytes as input through <code class="highlighter-rouge">write</code> function.</p>
+
+<p>Therefore, to write anything into ADLS you just need <code class="highlighter-rouge">open</code> function and a stream of object being written. There also exists a <code class="highlighter-rouge">put</code> function that can pick an object directly from file system and write it to ADLS. However, many times it’s convenient to just write the stream directly, rather than first writing it to local file system and then using <code class="highlighter-rouge">put</code>. In my view <code class="highlighter-rouge">open</code> is a more generalized approach to writing data to ADLS.</p>
+
+<h2 id="the-very-useful-bytesio-from-io-module">The very useful BytesIO() from io module</h2>
+<p>However, in some cases it might not be straightforward to obtain stream that you want to write to ADLS. Our task in hand is one such case. <code class="highlighter-rouge">ExcelWriter</code> function in <code class="highlighter-rouge">pandas</code> package expects a file like object to which it writes the excel file. In other words it wants to write file directly into file system. Under such conditions <code class="highlighter-rouge">BytesIO</code> function from <code class="highlighter-rouge">io</code> package turns out to be very useful. It simulates in memory stream as if it were a file object. Now <code class="highlighter-rouge">ExcelWriter</code> can easily write to it. When passing it into <code class="highlighter-rouge">open</code> function from <code class="highlighter-rouge">AzureDLFileSyste</code>, use <code class="highlighter-rouge">getvalue()</code> method of <code class="highlighter-rouge">BytesIO</code> object to get the stream back.</p>
+
+<p>In my experience <code class="highlighter-rouge">io</code> package is a very useful one. It helps simplify things a lot in code. I recommend getting familiar with it.</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+      </footer>
+
+      
+
+      
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2019 अरुण चन्द्र पंत. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.8.1/js/all.js" integrity="sha384-g5uSoOSBd7KkhAMlnQILrecXvzst9TdC09/VM+pjDTCM+1il8RHz5fKANTFFb+gQ" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

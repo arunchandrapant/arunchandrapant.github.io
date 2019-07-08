@@ -1,5 +1,7 @@
 # main links
 main:
+    - title: "Technology"
+      url: /technology/
   #- title: "Blog"
   #  url: /blog/
   #- title: "About"

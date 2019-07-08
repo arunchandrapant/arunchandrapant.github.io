@@ -314,8 +314,13 @@ var store = [{
         "tags": ["video","layout"],
         "url": "http://localhost:4000/layout/uncategorized/layout-header-video/",
         "teaser":null},{
+        "title": "Writing Excel file to Azure Data Lake Store Gen-1 using Python and Pandas",
+        "excerpt":"Azure Python SDK Whenever dealing with Azure resources in Python code, Azure Python SDK comes handy. Having a native Python API maintained by Azure saves time and effort required to create custom wrappers over Azure REST API. SDK Components for Azure Datalake Store Gen-1 The Azure Data Lake Store Gen-1...","categories": [],
+        "tags": [],
+        "url": "http://localhost:4000/technology/excel-to-adls-python/",
+        "teaser":null},{
         "title": "मेघालय",
-        "excerpt":"हम दिन मे गुवाहाटी से चले तो शिलौंग पहुंचने से पहले ही सूर्यास्त हो चुका था। उमियम ताल के दर्शन अंधेरे मे हुएे। सुना था क्रिस्मस का पर्व यहां पर प्रसिद्ध है, पर एेसा कुछ अनुभव नहीं हुअा। शहर शांत और अंधेरा सा था। उमियम ताल शहर मे ना रुकते...","categories": [],
+        "excerpt":"हम दिन मे गुवाहाटी से चले तो शिलौंग पहुंचने से पहले ही सूर्यास्त हो चुका था। उमियम ताल के दर्शन अंधेरे मे हुऐ। सुना था क्रिस्मस का पर्व यहां पर प्रसिद्ध है, पर ऐसा कुछ अनुभव नहीं हुआ। शहर शांत और अंधेरा सा था। उमियम ताल शहर मे ना रुकते...","categories": [],
         "tags": [],
         "url": "http://localhost:4000/travel/meghalaya/",
         "teaser":"http://localhost:4000/assets/images/meghalaya/meghalaya.jpg"}]

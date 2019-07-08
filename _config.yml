@@ -286,6 +286,9 @@ collections:
     travel:
         output: true
         permalink: /:collection/:path/
+    technology:
+        output: true
+        permalink: /:collection/:path/ 
 
 
 # Defaults
@@ -308,4 +311,12 @@ defaults:
     values:
       layout: single
       author_profile: false
-      share: true
+      share: false
+  # _technology
+  - scope:
+      path: ""
+      type: technology 
+    values:
+      layout: single
+      author_profile: false
+      share: false
