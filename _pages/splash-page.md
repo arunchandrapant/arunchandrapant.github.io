@@ -22,6 +22,15 @@ feature_row:
     url: "/travel/meghalaya"
     btn_label: "विस्तार"
     btn_class: "btn--primary"
+feature_row5:
+  - image_path: assets/images/batesar/batesar_header.jpg
+    image_caption: "बटेसर"
+    alt: "बटेसर"
+    title: "बटेसर"
+    excerpt: "मुरैना-ग्वालियर के निकट स्थित अद्भुत मंदिर श्रंखला"
+    url: "/travel/batesar"
+    btn_label: "विस्तार"
+    btn_class: "btn--primary"
 feature_row1:
   - image_path: assets/images/meghalaya/meghalaya.jpg
     image_caption: "मेघालय"
@@ -67,4 +76,5 @@ feature_row4:
     btn_class: "btn--primary"
 ---
 
-{% include feature_row id="feature_row" type="center" %}
+{% include feature_row id="feature_row" type="left" %}
+{% include feature_row id="feature_row5" type="right" %}
